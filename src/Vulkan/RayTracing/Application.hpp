@@ -2,6 +2,7 @@
 
 #include "Vulkan/Application.hpp"
 #include "RayTracingProperties.hpp"
+#include "glm/vec4.hpp"
 
 namespace Vulkan
 {
@@ -36,15 +37,24 @@ namespace Vulkan::RayTracing
 		void CreateSwapChain() override;
 		void DeleteSwapChain() override;
 		void Render(VkCommandBuffer commandBuffer, uint32_t imageIndex) override;
-			   
+		void Render_LightProbe(VkCommandBuffer commandBuffer, uint32_t imageIndex);
+		
+		auto getLightProbeIndex() { return numOfProbe; };
+		void setIsProbeTexture(bool temp) { ShowLightProbeTexture = temp; };
+		void setIsRaytrace(bool temp) { ShowOriginalRaytrace = temp; };
+		void setCurrentIndex(uint32_t index) { currentProbeIndex = index; };
 	private:
 
 		void CreateBottomLevelStructures(VkCommandBuffer commandBuffer);
 		void CreateTopLevelStructures(VkCommandBuffer commandBuffer);
 		void CreateOutputImage();
+		void CreateProbeTextureImage();
+		void DeleteProbeTextureImage();
 
 		std::unique_ptr<class DeviceProcedures> deviceProcedures_;
 		std::unique_ptr<class RayTracingProperties> rayTracingProperties_;
+		
+		std::vector<class LightProbe> lightProbes;
 
 		std::vector<class BottomLevelAccelerationStructure> bottomAs_;
 		std::unique_ptr<Buffer> bottomBuffer_;
@@ -54,8 +64,10 @@ namespace Vulkan::RayTracing
 		std::vector<class TopLevelAccelerationStructure> topAs_;
 		std::unique_ptr<Buffer> topBuffer_;
 		std::unique_ptr<DeviceMemory> topBufferMemory_;
+
 		std::unique_ptr<Buffer> topScratchBuffer_;
 		std::unique_ptr<DeviceMemory> topScratchBufferMemory_;
+
 		std::unique_ptr<Buffer> instancesBuffer_;
 		std::unique_ptr<DeviceMemory> instancesBufferMemory_;
 
@@ -69,6 +81,20 @@ namespace Vulkan::RayTracing
 		
 		std::unique_ptr<class RayTracingPipeline> rayTracingPipeline_;
 		std::unique_ptr<class ShaderBindingTable> shaderBindingTable_;
+
+		std::unique_ptr<class LightProbeRTPipeline> lightProbeRTPipeline;
+		std::unique_ptr<class ShaderBindingTable> lightProbeShaderBindingTable_;
+
+		std::vector<glm::vec4> lightProbePos;
+		std::unique_ptr<Buffer> lightProbePosBuffer;
+		std::unique_ptr<DeviceMemory> lightProbePosBufferMemory;
+
+		bool isPrecomputed = false;
+		bool isLightProbeCreated = false;
+		uint32_t numOfProbe;
+		bool ShowLightProbeTexture = false;
+		bool ShowOriginalRaytrace = false;
+		uint32_t currentProbeIndex = 0;
 	};
 
 }

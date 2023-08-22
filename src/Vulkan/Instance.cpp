@@ -29,21 +29,21 @@ Instance::Instance(const class Window& window, const std::vector<const char*>& v
 	// Create the Vulkan instance.
 	VkApplicationInfo appInfo = {};
 	appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO;
-	appInfo.pApplicationName = "RayTracingWeekends";
+	appInfo.pApplicationName = "Individual Project";
 	appInfo.applicationVersion = VK_MAKE_VERSION(1, 0, 0);
 	appInfo.pEngineName = "No Engine";
 	appInfo.engineVersion = VK_MAKE_VERSION(1, 0, 0);
 	appInfo.apiVersion = vulkanVersion;
 
-	VkInstanceCreateInfo createInfo = {};
-	createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
-	createInfo.pApplicationInfo = &appInfo;
-	createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
-	createInfo.ppEnabledExtensionNames = extensions.data();
-	createInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
-	createInfo.ppEnabledLayerNames = validationLayers.data();
+	VkInstanceCreateInfo instCreateInfo = {};
+	instCreateInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
+	instCreateInfo.pApplicationInfo = &appInfo;
+	instCreateInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
+	instCreateInfo.ppEnabledExtensionNames = extensions.data();
+	instCreateInfo.enabledLayerCount = static_cast<uint32_t>(validationLayers.size());
+	instCreateInfo.ppEnabledLayerNames = validationLayers.data();
 
-	Check(vkCreateInstance(&createInfo, nullptr, &instance_),
+	Check(vkCreateInstance(&instCreateInfo, nullptr, &instance_),
 		"create instance");
 
 	GetVulkanPhysicalDevices();

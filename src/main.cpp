@@ -111,6 +111,9 @@ namespace
 		userSettings.ShowHeatmap = false;
 		userSettings.HeatmapScale = 1.5f;
 
+		userSettings.ShowLightProbeTexture = false;
+		userSettings.ShowOriginalRaytrace = false;
+
 		return userSettings;
 	}
 

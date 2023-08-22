@@ -10,6 +10,9 @@ layout(binding = 6) readonly buffer MaterialArray { Material[] Materials; };
 layout(binding = 7) readonly buffer OffsetArray { uvec2[] Offsets; };
 layout(binding = 8) uniform sampler2D[] TextureSamplers;
 
+
+
+
 #include "Scatter.glsl"
 #include "Vertex.glsl"
 

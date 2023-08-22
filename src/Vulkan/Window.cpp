@@ -163,15 +163,26 @@ bool Window::IsMinimized() const
 void Window::Run()
 {
 	glfwSetTime(0.0);
-
+	
+	uint32_t currentFrame = 0;
+	FrameTimer fr;
 	while (!glfwWindowShouldClose(window_))
 	{
 		glfwPollEvents();
-
+		
 		if (DrawFrame)
 		{
 			DrawFrame();
+			fr.markFrame();
+			currentFrame++;
 		}
+
+		if (currentFrame == 1000)
+		{
+			fr.printFrameDurations();
+			currentFrame++;
+		}
+
 	}
 }
 

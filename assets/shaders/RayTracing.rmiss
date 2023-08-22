@@ -14,7 +14,9 @@ void main()
 	{
 		// Sky color
 		const float t = 0.5*(normalize(gl_WorldRayDirectionEXT).y + 1);
+
 		const vec3 skyColor = mix(vec3(1.0), vec3(0.5, 0.7, 1.0), t);
+		//const vec3 skyColor = vec3(0);
 
 		Ray.ColorAndDistance = vec4(skyColor, -1);
 	}

@@ -9,7 +9,9 @@ layout(binding = 5) readonly buffer IndexArray { uint Indices[]; };
 layout(binding = 6) readonly buffer MaterialArray { Material[] Materials; };
 layout(binding = 7) readonly buffer OffsetArray { uvec2[] Offsets; };
 layout(binding = 8) uniform sampler2D[] TextureSamplers;
-layout(binding = 9) readonly buffer SphereArray { vec4[] Spheres; };
+
+
+layout(binding = 11) readonly buffer SphereArray { vec4[] Spheres; };
 
 #include "Scatter.glsl"
 #include "Vertex.glsl"
@@ -48,4 +50,9 @@ void main()
 	const vec2 texCoord = GetSphereTexCoord(normal);
 
 	Ray = Scatter(material, gl_WorldRayDirectionEXT, normal, texCoord, gl_HitTEXT, Ray.RandomSeed);
+
+//	if(material.MaterialModel == MaterialMetallic)
+//	{
+//		Ray.ColorAndDistance.rgb = vec3(0,0,0);
+//	}
 }

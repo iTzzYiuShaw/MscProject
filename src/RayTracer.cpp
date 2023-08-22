@@ -90,6 +90,9 @@ void RayTracer::OnDeviceSet()
 
 	LoadScene(userSettings_.SceneIndex);
 	CreateAccelerationStructures();
+	userSettings_.MaxLightProbeIndex = Application::getLightProbeIndex() - 1;
+	std::cout << "max: " << userSettings_.MaxLightProbeIndex << std::endl;
+	userSettings_.CurrentLightProbeIndex = 0;
 }
 
 void RayTracer::CreateSwapChain()
@@ -120,8 +123,12 @@ void RayTracer::DrawFrame()
 		LoadScene(userSettings_.SceneIndex);
 		CreateAccelerationStructures();
 		CreateSwapChain();
+		userSettings_.MaxLightProbeIndex = Application::getLightProbeIndex() - 1;
+		std::cout << "max: " << userSettings_.MaxLightProbeIndex << std::endl;
+		userSettings_.CurrentLightProbeIndex = 0;
 		return;
 	}
+	
 
 	// Check if the accumulation buffer needs to be reset.
 	if (resetAccumulation_ || 
@@ -153,6 +160,10 @@ void RayTracer::Render(VkCommandBuffer commandBuffer, const uint32_t imageIndex)
 
 	// Check the current state of the benchmark, update it for the new frame.
 	CheckAndUpdateBenchmarkState(prevTime);
+
+	Application::setIsProbeTexture(userSettings_.ShowLightProbeTexture);
+	Application::setIsRaytrace(userSettings_.ShowOriginalRaytrace);
+	Application::setCurrentIndex(userSettings_.CurrentLightProbeIndex);
 
 	// Render the scene
 	userSettings_.IsRayTraced

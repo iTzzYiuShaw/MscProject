@@ -148,6 +148,20 @@ bool UserInterface::WantsToCaptureMouse() const
 	return ImGui::GetIO().WantCaptureMouse;
 }
 
+void UserInterface::NextProbeTexture()
+{
+
+	Settings().CurrentLightProbeIndex++;
+
+	if (Settings().CurrentLightProbeIndex > Settings().MaxLightProbeIndex)
+	{
+		Settings().CurrentLightProbeIndex = 0;
+	}
+}
+
+
+
+
 void UserInterface::DrawSettings()
 {
 	if (!Settings().ShowSettings)
@@ -200,6 +214,19 @@ void UserInterface::DrawSettings()
 		ImGui::Text("Ray Tracing");
 		ImGui::Separator();
 		ImGui::Checkbox("Enable ray tracing", &Settings().IsRayTraced);
+
+		ImGui::Checkbox("Show light probe texture", &Settings().ShowLightProbeTexture);
+		ImGui::Checkbox("Show original raytracing scene", &Settings().ShowOriginalRaytrace);
+
+		std::string str = "Current probe Index: " + std::to_string(Settings().CurrentLightProbeIndex);
+		const char* cstr = str.c_str();
+		ImGui::Text(cstr);
+
+		if (ImGui::Button("Next lightProbe"))
+		{
+			NextProbeTexture();
+		}
+
 		ImGui::Checkbox("Accumulate rays between frames", &Settings().AccumulateRays);
 		uint32_t min = 1, max = 128;
 		ImGui::SliderScalar("Samples", ImGuiDataType_U32, &Settings().NumberOfSamples, &min, &max);

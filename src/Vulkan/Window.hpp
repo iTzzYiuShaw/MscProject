@@ -4,6 +4,8 @@
 #include "Vulkan.hpp"
 #include <functional>
 #include <vector>
+#include <iostream>
+#include <chrono>
 
 namespace Vulkan
 {
@@ -47,5 +49,35 @@ namespace Vulkan
 		const WindowConfig config_;
 		GLFWwindow* window_{};
 	};
+
+
+	class FrameTimer {
+	private:
+		std::chrono::time_point<std::chrono::high_resolution_clock> lastTime;
+		std::vector<double> frameDurations;
+
+	public:
+		FrameTimer() {
+			lastTime = std::chrono::high_resolution_clock::now();
+		}
+
+		void markFrame() {
+			auto now = std::chrono::high_resolution_clock::now();
+			std::chrono::duration<double, std::milli> frameDuration = now - lastTime;
+
+			frameDurations.push_back(frameDuration.count());
+			lastTime = now;
+		}
+
+		void printFrameDurations() {
+			double total = 0;
+			for (double duration : frameDurations) {
+				total += duration;
+			}
+			std::cout << "Average frame duration over 1000 frames: " << total / 1000 << std::endl;
+		}
+	};
+
+
 
 }

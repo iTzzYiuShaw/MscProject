@@ -1,0 +1,3 @@
+D:/Softwares/Clion/RT4/RayTracingInVulkan/assets/CMakeFiles/Assets.dir
+D:/Softwares/Clion/RT4/RayTracingInVulkan/assets/CMakeFiles/ALL_BUILD.dir
+D:/Softwares/Clion/RT4/RayTracingInVulkan/assets/CMakeFiles/ZERO_CHECK.dir

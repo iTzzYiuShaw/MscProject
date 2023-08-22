@@ -3,6 +3,8 @@
 #include "Vulkan/Vulkan.hpp"
 #include <memory>
 #include <vector>
+#include "LightProbe.hpp"
+#include "Vulkan/Buffer.hpp"
 
 namespace Assets
 {
@@ -36,7 +38,11 @@ namespace Vulkan::RayTracing
 			const ImageView& accumulationImageView,
 			const ImageView& outputImageView,
 			const std::vector<Assets::UniformBuffer>& uniformBuffers,
-			const Assets::Scene& scene);
+			const Assets::Scene& scene,
+			const std::vector<LightProbe>& lightProbes,
+			const std::unique_ptr<Buffer>& lightProbePosBuffer);
+
+
 		~RayTracingPipeline();
 
 		uint32_t RayGenShaderIndex() const { return rayGenIndex_; }

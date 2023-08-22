@@ -1,5 +1,6 @@
 #include "ModelViewController.hpp"
 #include "Vulkan/Vulkan.hpp"
+#include <iostream>
 
 void ModelViewController::Reset(const glm::mat4& modelView)
 {
@@ -117,7 +118,10 @@ bool ModelViewController::UpdateCamera(const double speed, const double timeDelt
 
 void ModelViewController::MoveForward(const float d)
 {
+
+	std::cout << "Position: " << position_.x << " " << position_.y << " " << position_.z << std::endl;
 	position_ += d * forward_;
+	
 }
 
 void ModelViewController::MoveRight(const float d)

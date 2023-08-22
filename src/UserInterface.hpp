@@ -39,6 +39,7 @@ public:
 
 	bool WantsToCaptureKeyboard() const;
 	bool WantsToCaptureMouse() const;
+	void NextProbeTexture();
 
 	UserSettings& Settings() { return userSettings_; }
 

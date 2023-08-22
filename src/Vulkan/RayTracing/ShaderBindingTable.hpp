@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "Vulkan/Buffer.hpp"
+#include "LightProbeRTPipeline.hpp"
 
 namespace Vulkan
 {
@@ -34,6 +35,15 @@ namespace Vulkan::RayTracing
 		ShaderBindingTable(
 			const DeviceProcedures& deviceProcedures,
 			const RayTracingPipeline& rayTracingPipeline,
+			const RayTracingProperties& rayTracingProperties,
+			const std::vector<Entry>& rayGenPrograms,
+			const std::vector<Entry>& missPrograms,
+			const std::vector<Entry>& hitGroups);
+
+
+		ShaderBindingTable(
+			const DeviceProcedures& deviceProcedures,
+			const LightProbeRTPipeline& rayTracingPipeline,
 			const RayTracingProperties& rayTracingProperties,
 			const std::vector<Entry>& rayGenPrograms,
 			const std::vector<Entry>& missPrograms,

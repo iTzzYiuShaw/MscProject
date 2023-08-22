@@ -90,6 +90,37 @@ SceneAssets SceneList::CubeAndSpheres(CameraInitialSate& camera)
 	models.push_back(Model::CreateSphere(vec3(-1, 0, 0), 0.5, Material::Dielectric(1.5f), true));
 	models.push_back(Model::CreateSphere(vec3(0, 1, 0), 0.5, Material::Lambertian(vec3(1.0f), 0), true));
 
+	////////// Define the midpoints of the planes
+	//std::vector<glm::vec3> midpoints = {
+	//	glm::vec3(0, 2.5, 0),
+	//	glm::vec3(0, 0, 0),
+	//	glm::vec3(0, -2.5, 0)
+	//};
+	//// Define the side length and the number of probes per edge
+	//float sideLength = 3.5f;
+	//int probesPerEdge = 3;
+
+	//// Loop through each plane
+	//for (const auto& midpoint : midpoints) {
+	//	// Place probes at the vertices and edge midpoints of the square
+	//	for (int i = -1 * probesPerEdge / 2; i <= probesPerEdge/2; ++i) {
+	//		for (int j = -1 * probesPerEdge / 2; j <= probesPerEdge/2; ++j) {
+	//			float x = midpoint.x + (i) * sideLength / 2;
+	//			float y = midpoint.y;
+	//			float z = midpoint.z + (j) * sideLength / 2;
+
+	//			// Skip the center point of the middle plane
+	//			if ((x == 0.0f) && (y == 0.0f) && (z == 0.0f)) {
+	//				continue;
+	//			}
+
+	//			// Skip the center point, as we only want vertices and edge midpoints
+	//			models.push_back(Model::CreateSphere(glm::vec3(x, y, z), 0.2, Material::Metallic(vec3(1.0,1.0,1.0),0.6f), true));
+	//		}
+	//	}
+	//}
+
+
 	textures.push_back(Texture::LoadTexture("../assets/textures/land_ocean_ice_cloud_2048.png", Vulkan::SamplerConfig()));
 
 	return std::forward_as_tuple(std::move(models), std::move(textures));

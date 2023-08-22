@@ -14,12 +14,21 @@ float Schlick(const float cosine, const float refractionIndex)
 // Lambertian
 RayPayload ScatterLambertian(const Material m, const vec3 direction, const vec3 normal, const vec2 texCoord, const float t, inout uint seed)
 {
+	//See if the ray is actually scattered
 	const bool isScattered = dot(direction, normal) < 0;
+
+	//Get texture color
 	const vec4 texColor = m.DiffuseTextureId >= 0 ? texture(TextureSamplers[nonuniformEXT(m.DiffuseTextureId)], texCoord) : vec4(1);
+
+	//Wrap up all information
 	const vec4 colorAndDistance = vec4(m.Diffuse.rgb * texColor.rgb, t);
+
+	//Scatter direction
 	const vec4 scatter = vec4(normal + RandomInUnitSphere(seed), isScattered ? 1 : 0);
 
-	return RayPayload(colorAndDistance, scatter, seed);
+	//const vec4 colorAndDistance.rgb = vec4(1, 0, 0,t);
+
+	return RayPayload(colorAndDistance, scatter, vec4(normal,0),seed);
 }
 
 // Metallic
@@ -32,7 +41,9 @@ RayPayload ScatterMetallic(const Material m, const vec3 direction, const vec3 no
 	const vec4 colorAndDistance = vec4(m.Diffuse.rgb * texColor.rgb, t);
 	const vec4 scatter = vec4(reflected + m.Fuzziness*RandomInUnitSphere(seed), isScattered ? 1 : 0);
 
-	return RayPayload(colorAndDistance, scatter, seed);
+	//const vec4 colorAndDistance = vec4(1, 1, 1, t);
+
+	return RayPayload(colorAndDistance, scatter, vec4(normal, 0), seed);
 }
 
 // Dielectric
@@ -47,19 +58,20 @@ RayPayload ScatterDieletric(const Material m, const vec3 direction, const vec3 n
 	const float reflectProb = refracted != vec3(0) ? Schlick(cosine, m.RefractionIndex) : 1;
 
 	const vec4 texColor = m.DiffuseTextureId >= 0 ? texture(TextureSamplers[nonuniformEXT(m.DiffuseTextureId)], texCoord) : vec4(1);
-	
+	//const vec4 texColor = vec4(0,0,0,1);
+
 	return RandomFloat(seed) < reflectProb
-		? RayPayload(vec4(texColor.rgb, t), vec4(reflect(direction, normal), 1), seed)
-		: RayPayload(vec4(texColor.rgb, t), vec4(refracted, 1), seed);
+		? RayPayload(vec4(texColor.rgb, t), vec4(reflect(direction, normal), 1), vec4(normal, 0), seed)
+		: RayPayload(vec4(texColor.rgb, t), vec4(refracted, 1), vec4(normal, 0), seed);
 }
 
 // Diffuse Light
-RayPayload ScatterDiffuseLight(const Material m, const float t, inout uint seed)
+RayPayload ScatterDiffuseLight(const Material m, const float t, const vec3 normal, inout uint seed)
 {
 	const vec4 colorAndDistance = vec4(m.Diffuse.rgb, t);
 	const vec4 scatter = vec4(1, 0, 0, 0);
 
-	return RayPayload(colorAndDistance, scatter, seed);
+	return RayPayload(colorAndDistance, scatter, vec4(normal, 0), seed);
 }
 
 RayPayload Scatter(const Material m, const vec3 direction, const vec3 normal, const vec2 texCoord, const float t, inout uint seed)
@@ -75,7 +87,7 @@ RayPayload Scatter(const Material m, const vec3 direction, const vec3 normal, co
 	case MaterialDielectric:
 		return ScatterDieletric(m, normDirection, normal, texCoord, t, seed);
 	case MaterialDiffuseLight:
-		return ScatterDiffuseLight(m, t, seed);
+		return ScatterDiffuseLight(m, t, normal, seed);
 	}
 }
 

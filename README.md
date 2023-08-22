@@ -1,5 +1,11 @@
 # Msc Proejct
 
+## References
+This project is developed and made based on an awesome open-source code:
+Raytracing renderer: Ray Tracing In Vulkan
+https://github.com/GPSnoopy/RayTracingInVulkan/tree/master
+
+
 ## Building
 
 First you will need to install the [Vulkan SDK](https://vulkan.lunarg.com/sdk/home). For Windows, LunarG provides installers. For Ubuntu LTS, they have native packages available. For other Linux distributions, they only provide tarballs. The rest of the third party dependencies can be built using [Microsoft's vcpkg](https://github.com/Microsoft/vcpkg) as provided by the scripts below.

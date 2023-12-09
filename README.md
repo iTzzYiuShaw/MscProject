@@ -1,4 +1,4 @@
-# Msc Proejct
+# Msc Proejct- Simple Light probes
 
 ## Building
 
@@ -19,3 +19,26 @@ sudo apt-get install curl unzip tar libxi-dev libxinerama-dev libxcursor-dev xor
 ./vcpkg_linux.sh
 ./build_linux.sh
 ```
+
+
+## Light Probes
+
+“See” the actual scene from the perspective of the probe
+
+![image](https://github.com/iTzzYiuShaw/MscProject_LightProbes/assets/110170509/deb3fad2-050b-4152-bcba-c64cbac6a413)
+
+Radiance distribution texture
+
+![image](https://github.com/iTzzYiuShaw/MscProject_LightProbes/assets/110170509/a5cca0f8-516c-4d31-ab06-bf30a694401c)
+
+
+### Sampling result
+
+Original Raytracing (Front)
+
+![image](https://github.com/iTzzYiuShaw/MscProject_LightProbes/assets/110170509/40d1108d-a2a5-47e0-91aa-a51e2020ac5a)
+
+Light probes Sampling (Front)
+
+![image](https://github.com/iTzzYiuShaw/MscProject_LightProbes/assets/110170509/abfd87dd-83f1-4d4a-9846-981575daf9db)
+
